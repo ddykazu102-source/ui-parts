@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JS / UIパーツ集</title>
+  <meta name="description" content="JavaScriptで作ったUIパーツ（アコーディオン/モーダル/タブ等）のまとめ。" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <div>
+        <h1 class="title">JS / UIパーツ集</h1>
+        <p class="subtitle">実務でよく使うUIを、アクセシビリティと可読性を意識して実装。</p>
+      </div>
+
+      <div class="controls">
+        <label class="search">
+          <span class="sr-only">検索</span>
+          <input id="search" type="search" placeholder="パーツ名で検索（例: modal）" />
+        </label>
+
+        <label class="select">
+          <span class="sr-only">カテゴリ</span>
+          <select id="filter">
+            <option value="all">すべて</option>
+            <option value="nav">ナビ</option>
+            <option value="form">フォーム</option>
+            <option value="overlay">オーバーレイ</option>
+            <option value="layout">レイアウト</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main">
+    <!-- ===== 1) Accordion ===== -->
+    <section class="card part" data-title="accordion アコーディオン" data-cat="layout">
+      <div class="card__head">
+        <h2>Accordion（アコーディオン）</h2>
+        <p>クリックで開閉。複数開閉/単一開閉どちらも対応できる構造。</p>
+      </div>
+
+      <div class="accordion" data-accordion>
+        <button class="acc__btn" aria-expanded="false">
+          料金について
+          <span class="acc__icon" aria-hidden="true">＋</span>
+        </button>
+        <div class="acc__panel" hidden>
+          <p>料金は内容により変動します。まずは要件をお聞かせください。</p>
+        </div>
+
+        <button class="acc__btn" aria-expanded="false">
+          納期について
+          <span class="acc__icon" aria-hidden="true">＋</span>
+        </button>
+        <div class="acc__panel" hidden>
+          <p>ページ数・デザイン有無により異なります。目安を提示します。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2) Modal ===== -->
+    <section class="card part" data-title="modal モーダル" data-cat="overlay">
+      <div class="card__head">
+        <h2>Modal（モーダル）</h2>
+        <p>ESCで閉じる、背景クリックで閉じる、フォーカストラップ対応。</p>
+      </div>
+
+      <button class="btn" data-open-modal="#modalDemo">モーダルを開く</button>
+
+      <div class="modal" id="modalDemo" aria-hidden="true">
+        <div class="modal__backdrop" data-close-modal></div>
+        <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+          <h3 id="modalTitle">モーダルのタイトル</h3>
+          <p>ここに説明文。フォーカスはモーダル内に閉じ込めます。</p>
+          <div class="row">
+            <button class="btn btn--sub" data-close-modal>閉じる</button>
+            <button class="btn">OK</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3) Tabs ===== -->
+    <section class="card part" data-title="tabs タブ" data-cat="nav">
+      <div class="card__head">
+        <h2>Tabs（タブ切り替え）</h2>
+        <p>クリックで表示切替。aria属性も付与。</p>
+      </div>
+
+      <div class="tabs" data-tabs>
+        <div class="tabs__list" role="tablist" aria-label="サンプルタブ">
+          <button class="tabs__tab is-active" role="tab" aria-selected="true" data-tab="t1">概要</button>
+          <button class="tabs__tab" role="tab" aria-selected="false" data-tab="t2">仕様</button>
+          <button class="tabs__tab" role="tab" aria-selected="false" data-tab="t3">注意</button>
+        </div>
+
+        <div class="tabs__panels">
+          <div class="tabs__panel" data-panel="t1">
+            <p>タブの概要。UIの情報量を整理できます。</p>
+          </div>
+          <div class="tabs__panel" data-panel="t2" hidden>
+            <ul>
+              <li>クリックで切替</li>
+              <li>aria-selected更新</li>
+              <li>hiddenで表示制御</li>
+            </ul>
+          </div>
+          <div class="tabs__panel" data-panel="t3" hidden>
+            <p>キーボード操作（左右）も拡張可能。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4) Toast ===== -->
+    <section class="card part" data-title="toast トースト 通知" data-cat="overlay">
+      <div class="card__head">
+        <h2>Toast（通知）</h2>
+        <p>操作結果を軽く通知。自動で消える。</p>
+      </div>
+
+      <button class="btn" data-toast="保存しました">トースト表示</button>
+      <div class="toasts" id="toasts" aria-live="polite" aria-relevant="additions"></div>
+    </section>
+
+    <!-- ===== 5) Copy Button ===== -->
+    <section class="card part" data-title="copy クリップボード コピー" data-cat="form">
+      <div class="card__head">
+        <h2>Copy Button（コピー）</h2>
+        <p>クリックでテキストをコピー。成功/失敗を表示。</p>
+      </div>
+
+      <div class="copy">
+        <input id="copyTarget" value="https://example.com" readonly />
+        <button class="btn btn--sub" data-copy="#copyTarget">コピー</button>
+        <span class="hint" id="copyHint" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <small>c <span id="year"></span> UI Parts</small>
+    </footer>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
