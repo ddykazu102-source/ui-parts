@@ -82,7 +82,7 @@ data属性を用いて、複数設置できる設計にしています。
 
 ## デモ
 
-（ここにGitHub PagesのURLを追加）
+https://ddykazu102-source.github.io/ui-parts/
 
 ---
 
